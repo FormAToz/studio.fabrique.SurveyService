@@ -19,6 +19,7 @@ import studio.fabrique.api.response.SurveyResponse;
 import studio.fabrique.service.QuestionService;
 import studio.fabrique.service.SurveyService;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -85,9 +86,9 @@ public class SurveyController {
 
     // получение списка активных опросов GET /survey/active
     @GetMapping("/active")
-    public ResponseEntity<SurveyResponse> getActiveList(@RequestParam(defaultValue = "0") int offset,
-                                                        @RequestParam(defaultValue = "10") int limit) {
-        return ResponseEntity.ok(new SurveyResponse());
+    public ResponseEntity<List<SurveyResponse>> getActiveList(@RequestParam(defaultValue = "0") int offset,
+                                              @RequestParam(defaultValue = "10") int limit) {
+        return ResponseEntity.ok(surveyService.getActiveSurveysList(offset, limit));
     }
 
     // прохождение опроса POST /survey/{id}/passed

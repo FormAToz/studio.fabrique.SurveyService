@@ -1,42 +1,34 @@
 package studio.fabrique.api.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import studio.fabrique.model.Question;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * Класс ответа с информацией об опросе
  */
-@JsonInclude(JsonInclude.Include.NON_DEFAULT)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class SurveyResponse {
 
-    private long id;
     private String name;
     private String description;
+
+    @JsonFormat(pattern = "YYYY-MM-dd HH:mm")
     private LocalDateTime startDate;
+
+    @JsonFormat(pattern = "YYYY-MM-dd HH:mm")
     private LocalDateTime endDate;
-    private List<Question> questionList;
+
 
     public SurveyResponse() {
     }
 
-    public SurveyResponse(long id, String name, String description, LocalDateTime startDate, LocalDateTime endDate, List<Question> questionList) {
-        this.id = id;
+    public SurveyResponse(String name, String description, LocalDateTime startDate, LocalDateTime endDate) {
         this.name = name;
         this.description = description;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.questionList = questionList;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -69,13 +61,5 @@ public class SurveyResponse {
 
     public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
-    }
-
-    public List<Question> getQuestionList() {
-        return questionList;
-    }
-
-    public void setQuestionList(List<Question> questionList) {
-        this.questionList = questionList;
     }
 }

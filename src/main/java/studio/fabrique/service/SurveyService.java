@@ -1,13 +1,18 @@
 package studio.fabrique.service;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import studio.fabrique.api.request.survey.SurveyRequest;
 import studio.fabrique.api.response.ResultResponse;
+import studio.fabrique.api.response.SurveyResponse;
 import studio.fabrique.exception.ApplicationException;
 import studio.fabrique.model.Survey;
 import studio.fabrique.repository.SurveyRepository;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Сервис по работе с опросами
@@ -89,5 +94,22 @@ public class SurveyService {
     public ResultResponse deleteById(long id) {
         surveyRepository.delete(getById(id));
         return new ResultResponse(true);
+    }
+
+    /**
+     * Метод получения всех активных опросов
+     * @param offset номер страницы (от 0) для вывода результатов
+     * @param limit количество опросов, которое надо вывести
+     * @return список активных постов (объекты {@link SurveyResponse})
+     */
+    public List<SurveyResponse> getActiveSurveysList(int offset, int limit) {
+        Pageable pageable = PageRequest.of(offset / limit, limit);
+        return surveyRepository.finAllActiveSurveys(pageable).stream()
+                .map(s -> new SurveyResponse(
+                        s.getName(),
+                        s.getDescription(),
+                        s.getStartDate(),
+                        s.getEndDate()))
+                .collect(Collectors.toList());
     }
 }
