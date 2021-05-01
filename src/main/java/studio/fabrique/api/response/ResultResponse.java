@@ -1,9 +1,10 @@
 package studio.fabrique.api.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import studio.fabrique.model.Survey;
 
 /**
- * Класс ответов приложения
+ * Класс ответов с результатами выполнения приложения
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResultResponse {
@@ -11,6 +12,7 @@ public class ResultResponse {
     private boolean result;
     private UserResponse user;
     private String message;
+    private Survey survey;
 
     public ResultResponse() {
     }
@@ -27,6 +29,11 @@ public class ResultResponse {
     public ResultResponse(boolean result, String message) {
         this.result = result;
         this.message = message;
+    }
+
+    public ResultResponse(boolean result, Survey survey) {
+        this.result = result;
+        this.survey = survey;
     }
 
     public boolean isResult() {
@@ -51,5 +58,13 @@ public class ResultResponse {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public Survey getSurvey() {
+        return survey;
+    }
+
+    public void setSurvey(Survey survey) {
+        this.survey = survey;
     }
 }
