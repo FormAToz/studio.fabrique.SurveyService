@@ -78,7 +78,7 @@ public class SurveyController {
     @DeleteMapping("/question/{id}")
     @PreAuthorize("hasAuthority('user:moderate')")
     public ResponseEntity<ResultResponse> deleteQuestionFromSurvey(@PathVariable long id) {
-        return ResponseEntity.ok(new ResultResponse(true));
+        return ResponseEntity.ok(questionService.deleteById(id));
     }
 
     // --------------------- USER ------------------

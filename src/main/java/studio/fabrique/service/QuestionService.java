@@ -78,4 +78,14 @@ public class QuestionService {
                 () -> new ApplicationException(String.format("Вопроса с id = %d не существует", id))
         );
     }
+
+    /**
+     * Метод удаления вопроса по id
+     * @param id иденификатор вопроса
+     * @return {@link ResultResponse} со значением true, если удаление прошло успешно
+     */
+    public ResultResponse deleteById(long id) {
+        questionRepository.delete(getById(id));
+        return new ResultResponse(true);
+    }
 }
