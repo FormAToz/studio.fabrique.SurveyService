@@ -16,6 +16,7 @@ import studio.fabrique.api.request.survey.SurveyPassedRequest;
 import studio.fabrique.api.request.survey.SurveyRequest;
 import studio.fabrique.api.response.ResultResponse;
 import studio.fabrique.api.response.SurveyResponse;
+import studio.fabrique.service.QuestionService;
 import studio.fabrique.service.SurveyService;
 
 import java.util.Optional;
@@ -25,10 +26,12 @@ import java.util.Optional;
 public class SurveyController {
 
     private final SurveyService surveyService;
+    private final QuestionService questionService;
 
 
-    public SurveyController(SurveyService surveyService) {
+    public SurveyController(SurveyService surveyService, QuestionService questionService) {
         this.surveyService = surveyService;
+        this.questionService = questionService;
     }
 
     // ------------------ ADMIN ----------------------------
@@ -60,7 +63,7 @@ public class SurveyController {
     @PreAuthorize("hasAuthority('user:moderate')")
     public ResponseEntity<ResultResponse> addQuestionToSurvey(@PathVariable long id,
                                                               @RequestBody QuestionRequest request) {
-        return ResponseEntity.ok(new ResultResponse(true));
+        return ResponseEntity.ok(questionService.addQuestionToSurvey(id, request));
     }
 
     // изменить вопрос в опросе PUT /survey/{surveyId}/{questionId}

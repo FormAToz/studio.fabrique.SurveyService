@@ -1,5 +1,6 @@
 package studio.fabrique.api.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import studio.fabrique.model.enums.QuestionType;
 
 /**
@@ -7,6 +8,7 @@ import studio.fabrique.model.enums.QuestionType;
  */
 public class QuestionRequest {
 
+    @JsonProperty(value = "survey_id")
     private final long surveyId;
     private final String text;
     private final QuestionType type;

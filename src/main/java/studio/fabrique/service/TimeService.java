@@ -14,9 +14,9 @@ import java.time.ZoneId;
 public class TimeService {
 
     /**
-     * Метод преобразования timestamp(long) в LocalDateTime
+     * Метод преобразования timestamp(long) в {@link LocalDateTime}
      * @param timestamp значение long (timestamp в секундах)
-     * @return LocalDateTime
+     * @return {@link LocalDateTime}
      */
     public LocalDateTime localDateTimeFromTimestamp(long timestamp) {
         return LocalDateTime.ofInstant(Instant.ofEpochSecond(timestamp), ZoneId.systemDefault());

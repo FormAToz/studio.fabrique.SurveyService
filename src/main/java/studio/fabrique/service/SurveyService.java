@@ -29,39 +29,35 @@ public class SurveyService {
 
     /**
      * Метод добавления нового опроса
-     * @param request объект SurveyRequest
-     * @return ResultResponse со значением true и данными о сохраненном опросе
+     * @param request объект {@link SurveyRequest}
+     * @return {@link ResultResponse} со значением true и данными о сохраненном опросе
      */
     public ResultResponse addSurvey(SurveyRequest request) {
         return new ResultResponse(true, surveyRepository.save(fromSurveyRequest(request)));
     }
 
     /**
-     * Метод проверки и преобразования объекта SurveyRequest в объект Survey
-     * @param request объект SurveyRequest
-     * @return объект Survey
+     * Метод проверки и преобразования объекта {@link SurveyRequest} в объект {@link Survey}
+     * @param request объект {@link SurveyRequest}
+     * @return объект {@link Survey}
      */
     private Survey fromSurveyRequest(SurveyRequest request) {
         LocalDateTime startDate = LocalDateTime.now();
         LocalDateTime endDate = timeService.localDateTimeFromTimestamp(request.getTimestampEndDate());
 
         // проверка длины названия и описания опроса
-        textService.checkTitleLength(request.getName());
-        textService.checkTextLength(request.getDescription());
+        String name = textService.checkTitleLength(request.getName());
+        String description = textService.checkTextLength(request.getDescription());
         // проверка даты окончания опроса
         timeService.checkEndDateIsLaterThanNow(startDate, endDate);
 
-        return new Survey(
-                request.getName(),
-                request.getDescription(),
-                endDate
-        );
+        return new Survey(name, description, endDate);
     }
 
     /**
      * Метод получения опроса по id
      * @param id идентификатор опроса
-     * @return объект Survey из базы
+     * @return объект {@link Survey} из базы
      * @throws ApplicationException в случае, если опрос не найден в базе
      */
     public Survey getById(long id) {
@@ -72,8 +68,8 @@ public class SurveyService {
     /**
      * Метод обновления данных существующего опроса
      * @param id идентификатор опроса
-     * @param request объект SurveyRequest
-     * @return ResultResponse со значением true и данными об измененном опросе
+     * @param request объект {@link SurveyRequest}
+     * @return {@link ResultResponse} со значением true и данными об измененном опросе
      */
     public ResultResponse updateSurvey(long id, SurveyRequest request) {
         Survey newSurvey = fromSurveyRequest(request);
@@ -82,14 +78,13 @@ public class SurveyService {
         surveyFromDb.setName(newSurvey.getName());
         surveyFromDb.setDescription(newSurvey.getDescription());
         surveyFromDb.setEndDate(newSurvey.getEndDate());
-
         return new ResultResponse(true, surveyFromDb);
     }
 
     /**
      * Метод удаления опроса по id
      * @param id иденификатор опроса
-     * @return @return ResultResponse со значением true, если удаление прошло успешно
+     * @return {@link ResultResponse} со значением true, если удаление прошло успешно
      */
     public ResultResponse deleteById(long id) {
         surveyRepository.delete(getById(id));

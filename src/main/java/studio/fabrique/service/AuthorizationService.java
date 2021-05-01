@@ -24,7 +24,7 @@ public class AuthorizationService {
 
     /**
      * Метод авторизации пользователей
-     * @param request LoginRequest с полями для авторизации
+     * @param request {@link LoginRequest} с полями для авторизации
      * @return ResultResponse со значением true и данными об авторизированном пользователе
      * @throw AuthenticationException в случае ошибки авторизации
      */
@@ -39,7 +39,7 @@ public class AuthorizationService {
 
     /**
      * Метод разлогинивает авторизированного пользователя
-     * @return ResultResponse со значением true
+     * @return {@link ResultResponse} со значением true
      */
     public ResultResponse logout() {
 

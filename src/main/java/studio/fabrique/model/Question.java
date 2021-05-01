@@ -1,18 +1,25 @@
 package studio.fabrique.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import studio.fabrique.model.enums.QuestionType;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.util.List;
 
 /**
  * Класс вопросов
  */
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @Entity
 @Table(name = "questions")
 public class Question {
@@ -22,10 +29,15 @@ public class Question {
     private long id;
 
     private String text;
+
+    @Enumerated(EnumType.STRING)
     private QuestionType type;
 
-    @ManyToMany(mappedBy = "questionList")
-    private List<Survey> surveyList;
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "survey_id")
+    private Survey surveyId;
+
 
     public Question() {
     }
@@ -34,6 +46,7 @@ public class Question {
         this.text = text;
         this.type = type;
     }
+
 
     public long getId() {
         return id;
@@ -59,11 +72,11 @@ public class Question {
         this.type = type;
     }
 
-    public List<Survey> getSurveyList() {
-        return surveyList;
+    public Survey getSurveyId() {
+        return surveyId;
     }
 
-    public void setSurveyList(List<Survey> surveyList) {
-        this.surveyList = surveyList;
+    public void setSurveyId(Survey surveyId) {
+        this.surveyId = surveyId;
     }
 }

@@ -27,22 +27,25 @@ public class TextService {
      * Метод проверки длины текстовых заголовков
      * @param title заголовок
      * @throws ApplicationException в случае, если длина заголовка выходит за допустимые пределы
+     * @return строка заголовка
      */
-    public void checkTitleLength(String title) {
+    public String checkTitleLength(String title) {
         if (title.length() < minTitleLength) {
             throw new ApplicationException("Заголовок менее " + minTitleLength + " символов");
         }
         if (title.length() > maxTitleLength) {
             throw new ApplicationException("Заголовок более " + maxTitleLength + " символов");
         }
+        return title;
     }
 
     /**
      * Метод проверки длины текста с описанием
      * @param text текст с описанием
      * @throws ApplicationException в случае, если длина текста выходит за допустимые пределы
+     * @return строка с текстом
      */
-    public void checkTextLength(String text) {
+    public String checkTextLength(String text) {
         if (text.length() < minTextLength) {
             throw new ApplicationException("Размер текста менее " + minTextLength + " символов");
         }
@@ -50,5 +53,6 @@ public class TextService {
         if (text.length() > maxTextLength) {
             throw new ApplicationException("Размер текста более " + maxTextLength + " символов");
         }
+        return text;
     }
 }
