@@ -1,11 +1,13 @@
 package studio.fabrique.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,19 +27,23 @@ public class SurveyController {
 
     // добавить опрос POST /survey/add
     @PostMapping("/add")
-    public ResponseEntity<ResultResponse> addSurvey(SurveyRequest request) {
+    @PreAuthorize("hasAuthority('user:moderate')")
+    public ResponseEntity<ResultResponse> addSurvey(@RequestBody SurveyRequest request) {
         return ResponseEntity.ok(new ResultResponse(true));
     }
 
     // изменить опрос PUT /survey/{id}/update
     @PutMapping("/{id}/update")
-    public ResponseEntity<ResultResponse> updateSurvey(@PathVariable Optional<Long> id, SurveyRequest request) {
+    @PreAuthorize("hasAuthority('user:moderate')")
+    public ResponseEntity<ResultResponse> updateSurvey(@PathVariable Optional<Long> id,
+                                                       @RequestBody  SurveyRequest request) {
         //TODO обработать Optional
         return ResponseEntity.ok(new ResultResponse(true));
     }
 
     // удалить опрос DELETE /survey/{id}
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('user:moderate')")
     public ResponseEntity<ResultResponse> deleteSurvey(@PathVariable Optional<Long> id) {
         //TODO обработать Optional
         return ResponseEntity.ok(new ResultResponse(true));
@@ -45,22 +51,26 @@ public class SurveyController {
 
     // добавить вопрос к опросу POST /survey/{id}/question-add
     @PostMapping("/{id}/question-add")
-    public ResponseEntity<ResultResponse> addQuestionToSurvey(@PathVariable Optional<Long> id, QuestionRequest request) {
+    @PreAuthorize("hasAuthority('user:moderate')")
+    public ResponseEntity<ResultResponse> addQuestionToSurvey(@PathVariable Optional<Long> id,
+                                                              @RequestBody QuestionRequest request) {
         //TODO обработать Optional
         return ResponseEntity.ok(new ResultResponse(true));
     }
 
     // изменить вопрос в опросе PUT /survey/{surveyId}/{questionId}
      @PutMapping("/{surveyId}/{questionId}")
+     @PreAuthorize("hasAuthority('user:moderate')")
      public ResponseEntity<ResultResponse> updateQuestionInSurvey(@PathVariable Optional<Long> surveyId,
                                                                   @PathVariable Optional<Long> questionId,
-                                                                  QuestionRequest request) {
+                                                                  @RequestBody QuestionRequest request) {
         //TODO обработать Optional
         return ResponseEntity.ok(new ResultResponse(true));
      }
 
     // удалить вопрос в опросе DELETE /survey/{surveyId}/{questionId}
     @DeleteMapping("/{surveyId}/{questionId}")
+    @PreAuthorize("hasAuthority('user:moderate')")
     public ResponseEntity<ResultResponse> deleteQuestionFromSurvey(@PathVariable Optional<Long> surveyId,
                                                                    @PathVariable Optional<Long> questionId) {
         //TODO обработать Optional
@@ -79,7 +89,8 @@ public class SurveyController {
 
     // прохождение опроса POST /survey/{id}/passed
     @PostMapping("/{id}/passed")
-    public ResponseEntity<ResultResponse> passTheSurveys(@PathVariable Optional<Long> id, SurveyPassedRequest request) {
+    public ResponseEntity<ResultResponse> passTheSurveys(@PathVariable Optional<Long> id,
+                                                         @RequestBody SurveyPassedRequest request) {
         //TODO доработать SurveyPassedRequest, прикрутить и реализовать связь сущности ответа на вопрос
         //TODO обработать Optional
         return ResponseEntity.ok(new ResultResponse(true));
@@ -87,7 +98,9 @@ public class SurveyController {
 
     // получение детализации по пройденным опросам GET /survey/{id}/passed
     @GetMapping("/{id}/passed")
-    public ResponseEntity<SurveyResponse> getPassedSurveysByUserId(@PathVariable Optional<Long> id) {
+    public ResponseEntity<SurveyResponse> getPassedSurveysByUserId(@RequestParam(defaultValue = "0") int offset,
+                                                                   @RequestParam(defaultValue = "10") int limit,
+                                                                   @PathVariable Optional<Long> id) {
         //TODO обработать Optional
         return ResponseEntity.ok(new SurveyResponse());
     }

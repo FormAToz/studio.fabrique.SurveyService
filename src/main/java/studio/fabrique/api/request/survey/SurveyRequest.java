@@ -1,5 +1,6 @@
 package studio.fabrique.api.request.survey;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import studio.fabrique.model.Question;
 
 import java.util.List;
@@ -11,8 +12,12 @@ public class SurveyRequest {
 
     private final String name;
     private final String description;
+
+    @JsonProperty(value = "expiration_date")
     private final long timestampEndDate;
+
     private final List<Question> questions;
+
 
     public SurveyRequest(String name, String description, long timestampEndDate, List<Question> questions) {
         this.name = name;
@@ -20,6 +25,7 @@ public class SurveyRequest {
         this.timestampEndDate = timestampEndDate;
         this.questions = questions;
     }
+
 
     public String getName() {
         return name;

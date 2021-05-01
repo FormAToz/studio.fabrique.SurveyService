@@ -1,5 +1,6 @@
 package studio.fabrique.api.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import studio.fabrique.model.Question;
 
 import java.time.LocalDateTime;
@@ -8,6 +9,7 @@ import java.util.List;
 /**
  * Класс ответа с информацией об опросе
  */
+@JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class SurveyResponse {
 
     private long id;
