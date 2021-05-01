@@ -59,6 +59,17 @@ public class SurveyService {
     }
 
     /**
+     * Метод получения опроса по id
+     * @param id идентификатор опроса
+     * @return объект Survey из базы
+     * @throws ApplicationException в случае, если опрос не найден в базе
+     */
+    public Survey getById(long id) {
+        return surveyRepository.findById(id).orElseThrow(
+                () -> new ApplicationException(String.format("Опроса с id = %d не существует", id)));
+    }
+
+    /**
      * Метод обновления данных существующего опроса
      * @param id идентификатор опроса
      * @param request объект SurveyRequest
@@ -66,13 +77,22 @@ public class SurveyService {
      */
     public ResultResponse updateSurvey(long id, SurveyRequest request) {
         Survey newSurvey = fromSurveyRequest(request);
-        Survey surveyFromDb = surveyRepository.findById(id).orElseThrow(
-                () -> new ApplicationException(String.format("Опроса с id = %d не существует", id)));
+        Survey surveyFromDb = getById(id);
 
         surveyFromDb.setName(newSurvey.getName());
         surveyFromDb.setDescription(newSurvey.getDescription());
         surveyFromDb.setEndDate(newSurvey.getEndDate());
 
         return new ResultResponse(true, surveyFromDb);
+    }
+
+    /**
+     * Метод удаления опроса по id
+     * @param id иденификатор опроса
+     * @return @return ResultResponse со значением true, если удаление прошло успешно
+     */
+    public ResultResponse deleteById(long id) {
+        surveyRepository.delete(getById(id));
+        return new ResultResponse(true);
     }
 }

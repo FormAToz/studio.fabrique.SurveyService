@@ -52,7 +52,7 @@ public class SurveyController {
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('user:moderate')")
     public ResponseEntity<ResultResponse> deleteSurvey(@PathVariable long id) {
-        return ResponseEntity.ok(new ResultResponse(true));
+        return ResponseEntity.ok(surveyService.deleteById(id));
     }
 
     // добавить вопрос к опросу POST /survey/{id}/question-add
