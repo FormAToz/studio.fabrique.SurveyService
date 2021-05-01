@@ -1,5 +1,6 @@
 package studio.fabrique.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,6 +21,13 @@ import studio.fabrique.model.enums.Role;
 //@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Value("${admin-login}")
+    private String login;
+
+    @Value("${admin-password}")
+    private String password;
+
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -36,8 +44,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected UserDetailsService userDetailsService() {
         return new InMemoryUserDetailsManager(
                 User.builder()
-                .username("admin")
-                .password(passwordEncoder().encode("123456"))
+                .username(login)
+                .password(passwordEncoder().encode(password))
                 .authorities(Role.ADMIN.getAuthorities())
                 .build()
         );

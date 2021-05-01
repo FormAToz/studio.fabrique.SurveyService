@@ -35,12 +35,12 @@
 -  **```DB_NAME```** - имя базы данных
 -  **```DB_USER```** - имя пользователя для базы данных
 -  **```DB_PASSWORD```** - пароль для базы данных
--  **```ADMIN_LOGIN```** - логин администратора (admin)
--  **```ADMIN_PASSWORD```** - пароль администратора (123456)
+-  **```ADMIN_LOGIN```** - логин администратора
+-  **```ADMIN_PASSWORD```** - пароль администратора
 
 Запустить проект можно 2 способами:
    1.  Клонировать с репозитория командой ```git clone https://github.com/FormAToz/studio.fabrique.SurveyService.git``` и запустить в среде разработки, настроив переменные окружения.
-   2.  Запустить прилагаемый jar-файл (с заполненными значениями переменных окружения) командой ```java -DDB_NAME=<имя_бд> -DDB_USER=<пользователь_бд> -DDB_PASSWORD=<пароль_бд> -DADMIN_LOGIN=admin -DADMIN_PASSWORD=123456 -jar SurveyService-1.0-SNAPSHOT.jar```
+   2.  Запустить прилагаемый jar-файл (с заполненными значениями переменных окружения) командой ```java -DDB_NAME=<имя_бд> -DDB_USER=<пользователь_бд> -DDB_PASSWORD=<пароль_бд> -DADMIN_LOGIN=<login> -DADMIN_PASSWORD=<password> -jar SurveyService-1.0-SNAPSHOT.jar```
 
 ```Хост``` http://localhost:8080
 

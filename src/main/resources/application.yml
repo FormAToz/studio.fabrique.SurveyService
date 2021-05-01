@@ -22,8 +22,8 @@ spring:
 swagger-page: swagger-ui.html
 
 # Application properties
-admin-login: ${}
-admin-password: ${}
+admin-login: ${ADMIN_LOGIN}
+admin-password: ${ADMIN_PASSWORD}
 
 text:
   min-title-length: 3
