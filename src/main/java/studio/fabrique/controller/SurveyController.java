@@ -58,31 +58,28 @@ public class SurveyController {
         return ResponseEntity.ok(surveyService.deleteById(id));
     }
 
-    // добавить вопрос к опросу POST /survey/{id}/question-add
-    @PostMapping("/{id}/question-add")
+    // добавить вопрос к опросу POST /survey/{id}/question
+    @PostMapping("/{id}/question")
     @PreAuthorize("hasAuthority('user:moderate')")
     public ResponseEntity<ResultResponse> addQuestionToSurvey(@PathVariable long id,
                                                               @RequestBody QuestionRequest request) {
         return ResponseEntity.ok(questionService.addQuestionToSurvey(id, request));
     }
 
-    // изменить вопрос в опросе PUT /survey/{surveyId}/{questionId}
-     @PutMapping("/{surveyId}/{questionId}")
+    // изменить вопрос в опросе PUT /survey/question/{id}
+     @PutMapping("/question/{id}")
      @PreAuthorize("hasAuthority('user:moderate')")
-     public ResponseEntity<ResultResponse> updateQuestionInSurvey(@PathVariable long surveyId,
-                                                                  @PathVariable long questionId,
+     public ResponseEntity<ResultResponse> updateQuestionInSurvey(@PathVariable long id,
                                                                   @RequestBody QuestionRequest request) {
-        return ResponseEntity.ok(new ResultResponse(true));
+        return ResponseEntity.ok(questionService.updateQuestion(id, request));
      }
 
-    // удалить вопрос в опросе DELETE /survey/{surveyId}/{questionId}
-    @DeleteMapping("/{surveyId}/{questionId}")
+    // удалить вопрос в опросе DELETE /survey/question/{id}
+    @DeleteMapping("/question/{id}")
     @PreAuthorize("hasAuthority('user:moderate')")
-    public ResponseEntity<ResultResponse> deleteQuestionFromSurvey(@PathVariable long surveyId,
-                                                                   @PathVariable long questionId) {
+    public ResponseEntity<ResultResponse> deleteQuestionFromSurvey(@PathVariable long id) {
         return ResponseEntity.ok(new ResultResponse(true));
     }
-
 
     // --------------------- USER ------------------
 

@@ -57,7 +57,7 @@ public class SurveyService {
     /**
      * Метод получения опроса по id
      * @param id идентификатор опроса
-     * @return объект {@link Survey} из базы
+     * @return объект опроса {@link Survey} из базы
      * @throws ApplicationException в случае, если опрос не найден в базе
      */
     public Survey getById(long id) {
@@ -73,12 +73,12 @@ public class SurveyService {
      */
     public ResultResponse updateSurvey(long id, SurveyRequest request) {
         Survey newSurvey = fromSurveyRequest(request);
-        Survey surveyFromDb = getById(id);
+        Survey oldSurvey = getById(id);
 
-        surveyFromDb.setName(newSurvey.getName());
-        surveyFromDb.setDescription(newSurvey.getDescription());
-        surveyFromDb.setEndDate(newSurvey.getEndDate());
-        return new ResultResponse(true, surveyFromDb);
+        oldSurvey.setName(newSurvey.getName());
+        oldSurvey.setDescription(newSurvey.getDescription());
+        oldSurvey.setEndDate(newSurvey.getEndDate());
+        return new ResultResponse(true, surveyRepository.save(oldSurvey));
     }
 
     /**
