@@ -26,7 +26,7 @@ public class AuthorizationService {
      * Метод авторизации пользователей
      * @param request LoginRequest с полями для авторизации
      * @return ResultResponse со значением true и данными об авторизированном пользователе
-     * @throw AuthenticationException случае ошибки авторизации
+     * @throw AuthenticationException в случае ошибки авторизации
      */
     public ResultResponse login(LoginRequest request) {
 
