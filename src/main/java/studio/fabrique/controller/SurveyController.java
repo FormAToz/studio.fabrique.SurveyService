@@ -16,6 +16,7 @@ import studio.fabrique.api.request.survey.SurveyPassedRequest;
 import studio.fabrique.api.request.survey.SurveyRequest;
 import studio.fabrique.api.response.ResultResponse;
 import studio.fabrique.api.response.SurveyResponse;
+import studio.fabrique.service.SurveyService;
 
 import java.util.Optional;
 
@@ -23,13 +24,20 @@ import java.util.Optional;
 @RequestMapping("survey")
 public class SurveyController {
 
+    private final SurveyService surveyService;
+
+
+    public SurveyController(SurveyService surveyService) {
+        this.surveyService = surveyService;
+    }
+
     // ------------------ ADMIN ----------------------------
 
     // добавить опрос POST /survey/add
     @PostMapping("/add")
     @PreAuthorize("hasAuthority('user:moderate')")
     public ResponseEntity<ResultResponse> addSurvey(@RequestBody SurveyRequest request) {
-        return ResponseEntity.ok(new ResultResponse(true));
+        return ResponseEntity.ok(surveyService.addSurvey(request));
     }
 
     // изменить опрос PUT /survey/{id}/update

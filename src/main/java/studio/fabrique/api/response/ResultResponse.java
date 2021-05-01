@@ -36,6 +36,7 @@ public class ResultResponse {
         this.survey = survey;
     }
 
+
     public boolean isResult() {
         return result;
     }

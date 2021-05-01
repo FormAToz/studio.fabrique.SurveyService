@@ -1,5 +1,8 @@
 package studio.fabrique.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,6 +19,7 @@ import java.util.List;
 /**
  * Класс опросов
  */
+@JsonInclude(JsonInclude.Include.NON_DEFAULT)
 @Entity
 @Table(name = "surveys")
 public class Survey {
@@ -27,9 +31,11 @@ public class Survey {
     private String name;
     private String description;
 
+    @JsonFormat(pattern = "YYYY-MM-dd HH:mm")
     @Column(name = "start_date")
-    private LocalDateTime startDate;
+    private final LocalDateTime startDate = LocalDateTime.now();
 
+    @JsonFormat(pattern = "YYYY-MM-dd HH:mm")
     @Column(name = "end_date")
     private LocalDateTime endDate;
 
@@ -44,10 +50,9 @@ public class Survey {
     public Survey() {
     }
 
-    public Survey(String name, String description, LocalDateTime startDate, LocalDateTime endDate) {
+    public Survey(String name, String description, LocalDateTime endDate) {
         this.name = name;
         this.description = description;
-        this.startDate = startDate;
         this.endDate = endDate;
     }
 
@@ -77,10 +82,6 @@ public class Survey {
 
     public LocalDateTime getStartDate() {
         return startDate;
-    }
-
-    public void setStartDate(LocalDateTime startDate) {
-        this.startDate = startDate;
     }
 
     public LocalDateTime getEndDate() {

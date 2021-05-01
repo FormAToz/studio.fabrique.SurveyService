@@ -16,14 +16,11 @@ public class SurveyRequest {
     @JsonProperty(value = "expiration_date")
     private final long timestampEndDate;
 
-    private final List<Question> questions;
 
-
-    public SurveyRequest(String name, String description, long timestampEndDate, List<Question> questions) {
+    public SurveyRequest(String name, String description, long timestampEndDate) {
         this.name = name;
         this.description = description;
         this.timestampEndDate = timestampEndDate;
-        this.questions = questions;
     }
 
 
@@ -37,9 +34,5 @@ public class SurveyRequest {
 
     public long getTimestampEndDate() {
         return timestampEndDate;
-    }
-
-    public List<Question> getQuestions() {
-        return questions;
     }
 }
