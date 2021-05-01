@@ -43,45 +43,40 @@ public class SurveyController {
     // изменить опрос PUT /survey/{id}/update
     @PutMapping("/{id}/update")
     @PreAuthorize("hasAuthority('user:moderate')")
-    public ResponseEntity<ResultResponse> updateSurvey(@PathVariable Optional<Long> id,
+    public ResponseEntity<ResultResponse> updateSurvey(@PathVariable long id,
                                                        @RequestBody  SurveyRequest request) {
-        //TODO обработать Optional
-        return ResponseEntity.ok(new ResultResponse(true));
+        return ResponseEntity.ok(surveyService.updateSurvey(id, request));
     }
 
     // удалить опрос DELETE /survey/{id}
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('user:moderate')")
-    public ResponseEntity<ResultResponse> deleteSurvey(@PathVariable Optional<Long> id) {
-        //TODO обработать Optional
+    public ResponseEntity<ResultResponse> deleteSurvey(@PathVariable long id) {
         return ResponseEntity.ok(new ResultResponse(true));
     }
 
     // добавить вопрос к опросу POST /survey/{id}/question-add
     @PostMapping("/{id}/question-add")
     @PreAuthorize("hasAuthority('user:moderate')")
-    public ResponseEntity<ResultResponse> addQuestionToSurvey(@PathVariable Optional<Long> id,
+    public ResponseEntity<ResultResponse> addQuestionToSurvey(@PathVariable long id,
                                                               @RequestBody QuestionRequest request) {
-        //TODO обработать Optional
         return ResponseEntity.ok(new ResultResponse(true));
     }
 
     // изменить вопрос в опросе PUT /survey/{surveyId}/{questionId}
      @PutMapping("/{surveyId}/{questionId}")
      @PreAuthorize("hasAuthority('user:moderate')")
-     public ResponseEntity<ResultResponse> updateQuestionInSurvey(@PathVariable Optional<Long> surveyId,
-                                                                  @PathVariable Optional<Long> questionId,
+     public ResponseEntity<ResultResponse> updateQuestionInSurvey(@PathVariable long surveyId,
+                                                                  @PathVariable long questionId,
                                                                   @RequestBody QuestionRequest request) {
-        //TODO обработать Optional
         return ResponseEntity.ok(new ResultResponse(true));
      }
 
     // удалить вопрос в опросе DELETE /survey/{surveyId}/{questionId}
     @DeleteMapping("/{surveyId}/{questionId}")
     @PreAuthorize("hasAuthority('user:moderate')")
-    public ResponseEntity<ResultResponse> deleteQuestionFromSurvey(@PathVariable Optional<Long> surveyId,
-                                                                   @PathVariable Optional<Long> questionId) {
-        //TODO обработать Optional
+    public ResponseEntity<ResultResponse> deleteQuestionFromSurvey(@PathVariable long surveyId,
+                                                                   @PathVariable long questionId) {
         return ResponseEntity.ok(new ResultResponse(true));
     }
 
@@ -97,10 +92,9 @@ public class SurveyController {
 
     // прохождение опроса POST /survey/{id}/passed
     @PostMapping("/{id}/passed")
-    public ResponseEntity<ResultResponse> passTheSurveys(@PathVariable Optional<Long> id,
+    public ResponseEntity<ResultResponse> passTheSurveys(@PathVariable long id,
                                                          @RequestBody SurveyPassedRequest request) {
         //TODO доработать SurveyPassedRequest, прикрутить и реализовать связь сущности ответа на вопрос
-        //TODO обработать Optional
         return ResponseEntity.ok(new ResultResponse(true));
     }
 
@@ -109,7 +103,6 @@ public class SurveyController {
     public ResponseEntity<SurveyResponse> getPassedSurveysByUserId(@RequestParam(defaultValue = "0") int offset,
                                                                    @RequestParam(defaultValue = "10") int limit,
                                                                    @PathVariable Optional<Long> id) {
-        //TODO обработать Optional
         return ResponseEntity.ok(new SurveyResponse());
     }
 }

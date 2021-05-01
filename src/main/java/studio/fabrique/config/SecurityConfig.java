@@ -17,7 +17,7 @@ import studio.fabrique.model.enums.Role;
 
 @Configuration
 @EnableWebSecurity
-//TODO Включить после завершения
+//TODO Включить после завершения, приложить джарник в корень
 //@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 

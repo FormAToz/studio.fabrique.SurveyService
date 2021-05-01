@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Класс опросов
  */
-@JsonInclude(JsonInclude.Include.NON_DEFAULT)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @Entity
 @Table(name = "surveys")
 public class Survey {

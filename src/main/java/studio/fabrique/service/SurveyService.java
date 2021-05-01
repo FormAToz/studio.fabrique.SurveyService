@@ -3,6 +3,7 @@ package studio.fabrique.service;
 import org.springframework.stereotype.Service;
 import studio.fabrique.api.request.survey.SurveyRequest;
 import studio.fabrique.api.response.ResultResponse;
+import studio.fabrique.exception.ApplicationException;
 import studio.fabrique.model.Survey;
 import studio.fabrique.repository.SurveyRepository;
 
@@ -55,5 +56,23 @@ public class SurveyService {
                 request.getDescription(),
                 endDate
         );
+    }
+
+    /**
+     * Метод обновления данных существующего опроса
+     * @param id идентификатор опроса
+     * @param request объект SurveyRequest
+     * @return ResultResponse со значением true и данными об измененном опросе
+     */
+    public ResultResponse updateSurvey(long id, SurveyRequest request) {
+        Survey newSurvey = fromSurveyRequest(request);
+        Survey surveyFromDb = surveyRepository.findById(id).orElseThrow(
+                () -> new ApplicationException(String.format("Опроса с id = %d не существует", id)));
+
+        surveyFromDb.setName(newSurvey.getName());
+        surveyFromDb.setDescription(newSurvey.getDescription());
+        surveyFromDb.setEndDate(newSurvey.getEndDate());
+
+        return new ResultResponse(true, surveyFromDb);
     }
 }
