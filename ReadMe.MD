@@ -68,8 +68,8 @@
 
 ```json
 {
-  "login":"admin",
-  "password":"123456"
+  "login": "admin",
+  "password": "123456"
 }
 ```
 
