@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import studio.fabrique.model.UserDetail;
 
 @Repository
-public interface UserRepository extends JpaRepository<UserDetail, Long> {
+public interface PassedSurveyRepository extends JpaRepository<UserDetail, Long> {
 }

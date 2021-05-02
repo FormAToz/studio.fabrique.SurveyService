@@ -2,7 +2,6 @@ package studio.fabrique.service;
 
 import org.springframework.stereotype.Service;
 import studio.fabrique.api.request.QuestionRequest;
-import studio.fabrique.api.request.survey.SurveyRequest;
 import studio.fabrique.api.response.ResultResponse;
 import studio.fabrique.exception.ApplicationException;
 import studio.fabrique.model.Question;
@@ -73,7 +72,7 @@ public class QuestionService {
      * @return объект вопроса {@link Question} из базы
      * @throws ApplicationException в случае, если вопрос не найден в базе
      */
-    private Question getById(long id) {
+    public Question getById(long id) {
         return questionRepository.findById(id).orElseThrow(
                 () -> new ApplicationException(String.format("Вопроса с id = %d не существует", id))
         );

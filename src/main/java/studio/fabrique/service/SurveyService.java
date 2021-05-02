@@ -3,11 +3,13 @@ package studio.fabrique.service;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import studio.fabrique.api.request.survey.SurveyPassedRequest;
 import studio.fabrique.api.request.survey.SurveyRequest;
 import studio.fabrique.api.response.ResultResponse;
 import studio.fabrique.api.response.SurveyResponse;
 import studio.fabrique.exception.ApplicationException;
 import studio.fabrique.model.Survey;
+import studio.fabrique.model.UserDetail;
 import studio.fabrique.repository.SurveyRepository;
 
 import java.time.LocalDateTime;
@@ -21,12 +23,14 @@ import java.util.stream.Collectors;
 public class SurveyService {
 
     private final SurveyRepository surveyRepository;
+    private final PassedSurveyService passedSurveyService;
     private final TimeService timeService;
     private final TextService textService;
 
 
-    public SurveyService(SurveyRepository surveyRepository, TimeService timeService, TextService textService) {
+    public SurveyService(SurveyRepository surveyRepository, PassedSurveyService passedSurveyService, TimeService timeService, TextService textService) {
         this.surveyRepository = surveyRepository;
+        this.passedSurveyService = passedSurveyService;
         this.timeService = timeService;
         this.textService = textService;
     }
@@ -111,5 +115,25 @@ public class SurveyService {
                         s.getStartDate(),
                         s.getEndDate()))
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * Метод прохождения опросов пользователя с уникальным id
+     * @param request объект {@link SurveyPassedRequest}
+     * @return {@link ResultResponse} со значением true в случае успешного прохождения опроса
+     */
+    public ResultResponse passTheSurveysByUser(SurveyPassedRequest request) {
+        request.getSurveyPassedList().forEach(   // проходим по списку опросов
+               survey -> survey.getQuestions()  // проходим по списку ответов
+                       .forEach(question -> passedSurveyService.save(    // преобразовываем каждую запись в UserDetails и сохраняем ее
+                               new UserDetail(
+                                       request.getUserId(),
+                                       survey.getId(),
+                                       question.getId(),
+                                       question.getAnswer().getText(),
+                                       question.getAnswer().getType())
+                               )
+                       ));
+        return new ResultResponse(true);
     }
 }

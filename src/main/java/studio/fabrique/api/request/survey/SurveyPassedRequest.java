@@ -1,6 +1,6 @@
 package studio.fabrique.api.request.survey;
 
-import studio.fabrique.model.Survey;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
@@ -9,19 +9,24 @@ import java.util.List;
  */
 public class SurveyPassedRequest {
 
+    @JsonProperty(value = "user_id")
     private final long userId;
-    private final List<Survey> surveyList;
 
-    public SurveyPassedRequest(long userId, List<Survey> surveyList) {
+    @JsonProperty(value = "surveys")
+    private final List<SurveyRequest> surveyPassedList;
+
+
+    public SurveyPassedRequest(long userId, List<SurveyRequest> surveyPassedList) {
         this.userId = userId;
-        this.surveyList = surveyList;
+        this.surveyPassedList = surveyPassedList;
     }
+
 
     public long getUserId() {
         return userId;
     }
 
-    public List<Survey> getSurveyList() {
-        return surveyList;
+    public List<SurveyRequest> getSurveyPassedList() {
+        return surveyPassedList;
     }
 }

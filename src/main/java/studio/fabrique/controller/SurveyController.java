@@ -87,16 +87,14 @@ public class SurveyController {
     // получение списка активных опросов GET /survey/active
     @GetMapping("/active")
     public ResponseEntity<List<SurveyResponse>> getActiveList(@RequestParam(defaultValue = "0") int offset,
-                                              @RequestParam(defaultValue = "10") int limit) {
+                                                              @RequestParam(defaultValue = "10") int limit) {
         return ResponseEntity.ok(surveyService.getActiveSurveysList(offset, limit));
     }
 
-    // прохождение опроса POST /survey/{id}/passed
-    @PostMapping("/{id}/passed")
-    public ResponseEntity<ResultResponse> passTheSurveys(@PathVariable long id,
-                                                         @RequestBody SurveyPassedRequest request) {
-        //TODO доработать SurveyPassedRequest, прикрутить и реализовать связь сущности ответа на вопрос
-        return ResponseEntity.ok(new ResultResponse(true));
+    // прохождение опроса POST /survey/pass
+    @PostMapping("/pass")
+    public ResponseEntity<ResultResponse> passTheSurveys(@RequestBody SurveyPassedRequest request) {
+        return ResponseEntity.ok(surveyService.passTheSurveysByUser(request));
     }
 
     // получение детализации по пройденным опросам GET /survey/{id}/passed
