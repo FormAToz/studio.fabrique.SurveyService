@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * Класс опросов
+ * Класс сущности опроса
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @Entity
@@ -38,7 +39,7 @@ public class Survey {
     private LocalDateTime endDate;
 
     @JsonProperty(value = "questions")
-    @OneToMany(mappedBy = "surveyId")
+    @OneToMany(mappedBy = "surveyId",cascade = CascadeType.ALL)
     private List<Question> questionList;
 
 

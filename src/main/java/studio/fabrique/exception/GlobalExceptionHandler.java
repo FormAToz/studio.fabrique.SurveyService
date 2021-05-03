@@ -11,13 +11,6 @@ import studio.fabrique.api.response.ResultResponse;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    //TODO удалить
-    @ExceptionHandler(Exception.class)
-    public final ResponseEntity<ResultResponse> handleException(Exception ex) {
-        ex.printStackTrace();
-        return ResponseEntity.status(403).body(new ResultResponse(false, ex.getLocalizedMessage()));
-    }
-
     @ExceptionHandler(AccessDeniedException.class)
     public final ResponseEntity<ResultResponse> handleAccessDeniedException(AccessDeniedException ex) {
         return handleInternal(HttpStatus.FORBIDDEN, ex.getLocalizedMessage());

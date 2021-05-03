@@ -1,6 +1,5 @@
 package studio.fabrique.api.request;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import studio.fabrique.model.enums.QuestionType;
 
 /**
@@ -8,16 +7,12 @@ import studio.fabrique.model.enums.QuestionType;
  */
 public class QuestionRequest {
 
-    @JsonProperty(value = "survey_id")
-    private final long surveyId;
-
     private final long id;
     private final String text;
     private final QuestionType type;
     private final AnswerRequest answer;
 
-    public QuestionRequest(long surveyId, long id, String text, QuestionType type, AnswerRequest answer) {
-        this.surveyId = surveyId;
+    public QuestionRequest(long id, String text, QuestionType type, AnswerRequest answer) {
         this.id = id;
         this.text = text;
         this.type = type;
@@ -27,10 +22,6 @@ public class QuestionRequest {
 
     public long getId() {
         return id;
-    }
-
-    public long getSurveyId() {
-        return surveyId;
     }
 
     public String getText() {

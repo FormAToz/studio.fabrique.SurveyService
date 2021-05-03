@@ -2,26 +2,46 @@ package studio.fabrique.api.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
- * Класс ответа с информацией об опросе
+ * Класс ответа с информацией о пройденном опросе
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class SurveyResponse {
 
+    @JsonProperty(index = 0, value = "survey_name")
     private String name;
+
+    @JsonProperty(index = 1, value = "survey_description")
     private String description;
 
+    @JsonProperty(index = 2, value = "start_date")
     @JsonFormat(pattern = "YYYY-MM-dd HH:mm")
     private LocalDateTime startDate;
 
+    @JsonProperty(index = 3, value = "end_date")
     @JsonFormat(pattern = "YYYY-MM-dd HH:mm")
     private LocalDateTime endDate;
 
+    private List<QuestionResponse> questions;
+
 
     public SurveyResponse() {
+    }
+
+    public SurveyResponse(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
+    public SurveyResponse(String name, String description, List<QuestionResponse> questions) {
+        this.name = name;
+        this.description = description;
+        this.questions = questions;
     }
 
     public SurveyResponse(String name, String description, LocalDateTime startDate, LocalDateTime endDate) {
@@ -47,19 +67,11 @@ public class SurveyResponse {
         this.description = description;
     }
 
-    public LocalDateTime getStartDate() {
-        return startDate;
+    public List<QuestionResponse> getQuestions() {
+        return questions;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
-        this.startDate = startDate;
-    }
-
-    public LocalDateTime getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(LocalDateTime endDate) {
-        this.endDate = endDate;
+    public void setQuestions(List<QuestionResponse> questions) {
+        this.questions = questions;
     }
 }

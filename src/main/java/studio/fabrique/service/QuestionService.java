@@ -14,30 +14,32 @@ import studio.fabrique.repository.QuestionRepository;
 @Service
 public class QuestionService {
 
-    private final SurveyService surveyService;
     private final QuestionRepository questionRepository;
+    private final AnswerService answerService;
     private final TextService textService;
 
-
-    public QuestionService(SurveyService surveyService, QuestionRepository questionRepository, TextService textService) {
-        this.surveyService = surveyService;
+    public QuestionService(QuestionRepository questionRepository, AnswerService answerService, TextService textService) {
         this.questionRepository = questionRepository;
+        this.answerService = answerService;
         this.textService = textService;
     }
 
 
     /**
      * Метод добавления нового вопроса к опросу
-     * @param surveyId идентификатор опроса
-     * @param request объект {@link QuestionRequest}
-     * @return объект {@link ResultResponse} со значением true и данными о сохраненном вопросе
+     * @param survey объект опроса {@link Survey}
+     * @param request вопрос, объект {@link QuestionRequest}
+     * @return сохраненный в базу объект {@link Question}
      */
-    public ResultResponse addQuestionToSurvey(long surveyId, QuestionRequest request) {
-        Survey survey = surveyService.getById(surveyId);
+    public Question addQuestionToSurvey(Survey survey, QuestionRequest request) {
         Question question = fromQuestionRequest(request);
+        if (questionRepository.existsBySurveyIdAndTypeAndTextIgnoreCase(survey, question.getType(), question.getText())) {
+            throw new ApplicationException(String.format(
+                    "Вопрос с типом '%s' и текстом '%s' уже существует", question.getType(), question.getText()));
+        }
 
         question.setSurveyId(survey);
-        return new ResultResponse(true, questionRepository.save(question));
+        return questionRepository.save(question);
     }
 
     /**
@@ -84,7 +86,8 @@ public class QuestionService {
      * @return {@link ResultResponse} со значением true, если удаление прошло успешно
      */
     public ResultResponse deleteById(long id) {
-        questionRepository.delete(getById(id));
+        answerService.deleteByQuestion(getById(id));   // удаляем все ответы для этого вопроса
+        questionRepository.delete(getById(id));        // удаляем вопрос
         return new ResultResponse(true);
     }
 }

@@ -1,9 +1,9 @@
 spring:
   jpa:
     generate-ddl: false
-    show-sql: true
+    show-sql: false
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         jdbc:
@@ -17,9 +17,6 @@ spring:
     username: ${DB_USER}
     password: ${DB_PASSWORD}
 
-
-# Swagger application page
-swagger-page: swagger-ui.html
 
 # Application properties
 admin-login: ${ADMIN_LOGIN}

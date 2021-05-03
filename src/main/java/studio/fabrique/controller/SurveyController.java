@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import studio.fabrique.api.request.QuestionRequest;
+import studio.fabrique.api.request.UserIdRequest;
 import studio.fabrique.api.request.survey.SurveyPassedRequest;
 import studio.fabrique.api.request.survey.SurveyRequest;
 import studio.fabrique.api.response.ResultResponse;
@@ -20,7 +21,6 @@ import studio.fabrique.service.QuestionService;
 import studio.fabrique.service.SurveyService;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("survey")
@@ -64,7 +64,7 @@ public class SurveyController {
     @PreAuthorize("hasAuthority('user:moderate')")
     public ResponseEntity<ResultResponse> addQuestionToSurvey(@PathVariable long id,
                                                               @RequestBody QuestionRequest request) {
-        return ResponseEntity.ok(questionService.addQuestionToSurvey(id, request));
+        return ResponseEntity.ok(surveyService.addQuestionToSurvey(id, request));
     }
 
     // изменить вопрос в опросе PUT /survey/question/{id}
@@ -97,11 +97,11 @@ public class SurveyController {
         return ResponseEntity.ok(surveyService.passTheSurveysByUser(request));
     }
 
-    // получение детализации по пройденным опросам GET /survey/{id}/passed
-    @GetMapping("/{id}/passed")
-    public ResponseEntity<SurveyResponse> getPassedSurveysByUserId(@RequestParam(defaultValue = "0") int offset,
-                                                                   @RequestParam(defaultValue = "10") int limit,
-                                                                   @PathVariable Optional<Long> id) {
-        return ResponseEntity.ok(new SurveyResponse());
+    // получение детализации по пройденным опросам GET /survey/passed
+    @GetMapping("/passed")
+    public ResponseEntity<List<SurveyResponse>> getPassedSurveysByUserId(@RequestBody UserIdRequest userIdRequest,
+                                                                                                @RequestParam(defaultValue = "0") int offset,
+                                                                                                @RequestParam(defaultValue = "10") int limit) {
+        return ResponseEntity.ok(surveyService.getDetalizationByUserId(userIdRequest, offset, limit));
     }
 }

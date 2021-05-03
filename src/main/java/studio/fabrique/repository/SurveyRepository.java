@@ -18,4 +18,11 @@ public interface SurveyRepository extends JpaRepository<Survey, Long> {
      */
     @Query("from Survey s where s.endDate >= now()")
     List<Survey> finAllActiveSurveys(Pageable pageable);
+
+    /**
+     * Метод проверки существования опроса по имени
+     * @param name имя опроса
+     * @return true в случае, если опрос существует в базе и false, если не существует
+     */
+    boolean existsByNameIgnoreCase(String name);
 }

@@ -11,21 +11,16 @@ import studio.fabrique.model.Survey;
 public class ResultResponse {
 
     private boolean result;
-    private UserResponse user;
     private String message;
     private Survey survey;
     private Question question;
+
 
     public ResultResponse() {
     }
 
     public ResultResponse(boolean result) {
         this.result = result;
-    }
-
-    public ResultResponse(boolean result, UserResponse user) {
-        this.result = result;
-        this.user = user;
     }
 
     public ResultResponse(boolean result, String message) {
@@ -43,20 +38,13 @@ public class ResultResponse {
         this.question = question;
     }
 
+
     public boolean isResult() {
         return result;
     }
 
     public void setResult(boolean result) {
         this.result = result;
-    }
-
-    public UserResponse getUser() {
-        return user;
-    }
-
-    public void setUser(UserResponse user) {
-        this.user = user;
     }
 
     public String getMessage() {
